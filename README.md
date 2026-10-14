@@ -16,14 +16,14 @@ PHP web client (client-php)  ->  Node.js REST API (rest-api-wfh)  ->  Fabric gat
   `GET/POST /api/activities`, `GET/PUT/DELETE /api/activities/:id`, `GET /api/chain`, `GET /api/validate`,
   `GET /api/employee/:name`, `GET /api/history/:id`, `GET /api/date/:date`, `POST /api/init`.
 - **client-php**: the web interface (login, activity list, add activity, admin view of the chain).
-- **database**: a MySQL schema (`wfh_monitoring.sql`) kept from an earlier version of the design.
+- **database**: a MySQL schema (`wfh_monitoring.sql`) that is included in the project; the current PHP client talks to the REST API and does not use it.
 
 ## Running it
 
 This repository does **not** include a Fabric network or any keys. You need:
 
 1. A Hyperledger Fabric `test-network` with a channel named `mychannel` and this chaincode deployed under the name `wfh`.
-   `rest-api-wfh/server.js` expects the network's `organizations` folder (Org1, `User1`) next to this project; adjust the paths there.
+   `rest-api-wfh/server.js` reads the Org1 `User1` keys and the peer TLS certificate from a `test-network/organizations` folder three levels above `rest-api-wfh` (see `cryptoPath`); adjust the path to your setup.
 2. `cd rest-api-wfh && npm install && npm start` (listens on port 3000).
 3. Serve `client-php` with PHP (for example XAMPP) and open `login.php`.
 4. Call `POST /api/init` once to create the demo accounts.
